@@ -1,1 +1,0 @@
-curl http://10.88.2.30:8080/v1/elegibilidad/all

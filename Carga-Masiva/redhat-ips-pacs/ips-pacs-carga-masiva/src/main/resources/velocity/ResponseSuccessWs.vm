@@ -1,5 +1,0 @@
-{
-    "status":"OK",
-    "path":"${headers.CamelHttpUri}",
-    "timestamp":"${headers.CamelCurrentDate}"
-}
