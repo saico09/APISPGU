@@ -1,0 +1,16 @@
+{
+    "response":[
+    #foreach($body in $body)
+      {
+         "tramo":"$!{body.attr1}",
+         "cantTrab":"$!{body.attr2}",
+         "cantCargas":"$!{body.attr3}",
+         "cantCargVenc":"$!{body.attr4}"
+      }#if( !$foreach.last ),
+        #end
+    #end
+    ],
+    "status":"${headers.CamelResponseMessage}",
+    "path":"${headers.CamelHttpUri}",
+    "timestamp":"${headers.CamelCurrentDate}"
+}

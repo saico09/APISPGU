@@ -1,0 +1,165 @@
+package cl.ips.pacs;
+
+//from row number: 1
+//PACS-CodigoTIpoElegibilidad-No Legible
+rule "Row 1 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad((vectorPACSFijo contains 1 || vectorPACSFijo contains 2 || vectorPACSFijo contains 6) && ( vectorPACSVariable contains 1 || vectorPACSFijo contains 2 || vectorPACSFijo contains 8))
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( 0 );
+end
+
+//from row number: 2
+//PACS-CodigoTIpoElegibilidad-Pendiente
+rule "Row 2 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad((vectorPACSFijo contains 10 || vectorPACSFijo contains 5 || vectorPACSFijo contains 20 || vectorPACSFijo contains 21 || vectorPACSFijo contains 22 || vectorPACSFijo contains 0 || vectorPACSFijo contains 16) && (vectorPACSVariable contains 10 || vectorPACSVariable contains 11 || vectorPACSVariable contains 22 || vectorPACSVariable contains 0 || vectorPACSVariable contains 16))
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( -3 );
+end
+
+//from row number: 3
+//PACS-CodigoTIpoElegibilidad-Elegible Beneficio Fijo y Variable
+rule "Row 3 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad(
+		(
+		((vectorPACSFijo contains 7)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 12 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		||
+		((vectorPACSFijo contains 4)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 12 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		||
+		((vectorPACSFijo contains 12)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		|| 
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 4) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 10) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 5) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 20) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 21) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 22) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 20))
+		) && 
+		(
+		((vectorPACSVariable contains 9)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 14 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 22)) 
+		||
+		((vectorPACSVariable contains 4)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 14 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22)) 
+		|| 
+		((vectorPACSVariable contains 14)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22)) 
+		|| 
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 4) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 10) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 8) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 11) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 22) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9))
+		)
+		)
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( 4 );
+end
+
+//from row number: 4
+//PACS-CodigoTIpoElegibilidad-Elegible Beneficio Fijo
+rule "Row 4 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad(
+		((vectorPACSFijo contains 7)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 12 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		||
+		((vectorPACSFijo contains 4)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 12 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		||
+		((vectorPACSFijo contains 12)&&(vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22)) 
+		|| 
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 4) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 10) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 5) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 20) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 21) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 20 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 22))
+		||
+		((vectorPACSFijo contains 12 && vectorPACSFijo contains 22) && (vectorPACSFijo not contains 1 && vectorPACSFijo not contains 7 && vectorPACSFijo not contains 2 && vectorPACSFijo not contains 10 && vectorPACSFijo not contains 4 && vectorPACSFijo not contains 5 && vectorPACSFijo not contains 21 && vectorPACSFijo not contains 6 && vectorPACSFijo not contains 20))
+		)
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( 1 );
+end
+
+//from row number: 5
+//PACS-CodigoTIpoElegibilidad-Elegible Beneficio Variable
+rule "Row 5 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad(
+		((vectorPACSVariable contains 9)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 14 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 22)) 
+		||
+		((vectorPACSVariable contains 4)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 14 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22)) 
+		||
+		((vectorPACSVariable contains 14)&&(vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22)) 
+		|| 
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 4) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 10) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 8) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 11) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 9 && vectorPACSVariable not contains 22))
+		||
+		((vectorPACSVariable contains 14 && vectorPACSVariable contains 22) && (vectorPACSVariable not contains 1 && vectorPACSVariable not contains 2 && vectorPACSVariable not contains 4 && vectorPACSVariable not contains 10 && vectorPACSVariable not contains 8 && vectorPACSVariable not contains 11 && vectorPACSVariable not contains 9))
+		)
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( 2 );
+end
+
+//from row number: 6
+//PACS-CodigoTIpoElegibilidad-Pendiente Fijo
+rule "Row 6 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad((vectorPACSFijo contains 10 || vectorPACSFijo contains 5 || vectorPACSFijo contains 20 || vectorPACSFijo contains 21 || vectorPACSFijo contains 22 || vectorPACSFijo contains 0 || vectorPACSFijo contains 16) 
+		&& 
+		(vectorPACSVariable contains 8))
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( -5 );
+end
+
+//from row number: 7
+//PACS-CodigoTIpoElegibilidad-Pendiente Variable
+rule "Row 7 ReglasCodigoTipoElegibilidad"
+	no-loop true
+	enabled true
+	activation-group "first-hit-policy-group ReglasCodigoTipoElegibilidad"
+	dialect "mvel"
+	when
+		beneficiarioCTE : BeneficiarioCodTipoElegibilidad((vectorPACSFijo contains 6) && (vectorPACSVariable contains 10 || vectorPACSVariable contains 11 || vectorPACSVariable contains 22 || vectorPACSVariable contains 0 || vectorPACSVariable contains 16))
+	then
+		beneficiarioCTE.setCodigoTipoElegibilidad( -6 );
+end

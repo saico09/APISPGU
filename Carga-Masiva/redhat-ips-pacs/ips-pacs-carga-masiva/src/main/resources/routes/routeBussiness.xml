@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <routeContext id="routeBussiness" xmlns="http://camel.apache.org/schema/spring">
+		
+		<!-- Ruta Camel para Resumen argas Familiares Empresa -->
+		<route id="ResumenCargasFamiliares" >
+			<from id="_from1" uri="direct:runServiceCargasEmpresa" />
+			
+<!-- 			<log loggingLevel="INFO" message="Iniciando la ruta ..................." /> -->
+			
+			<!-- Procesador para validar Request -->
+			<process ref="procesadorRequest"/>
+
+			<setHeader headerName="Content-Type"><constant>application/json; charset:utf-8</constant></setHeader>
+			<setHeader headerName="CamelCurrentDate"><simple>${date:now:yyyy-MM-dd'T'HH:mm:ssZ}</simple></setHeader>
+<!-- 			<log loggingLevel="INFO" message="BodyResponse ${body}" /> -->
+			<to uri="velocity:velocity/ResponseSuccessWs.vm" />
+		</route>
+
+    </routeContext>
+</beans>

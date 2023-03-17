@@ -1,0 +1,14 @@
+{
+    "errors":[
+    #foreach($err in $headers.CamelExceptionHandler.constraintViolations)
+      {
+         "atributo":"${err.propertyPath}",
+         "mensaje":"${err.message}"
+      }#if( !$foreach.last ),
+        #end
+    #end
+    ],
+    "status":"ERROR",
+    "path":"${headers.CamelHttpUri}",
+    "timestamp":"${headers.CamelCurrentDate}"
+}

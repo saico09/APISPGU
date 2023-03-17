@@ -1,0 +1,8 @@
+{
+    "errors":{
+         "mensaje":"${headers.CamelExceptionHandler.message}"
+    },
+    "status":"ERROR",
+    "path":"${headers.CamelHttpUri}",
+    "timestamp":"${headers.CamelCurrentDate}"
+}
