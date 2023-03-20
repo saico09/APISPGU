@@ -40,7 +40,7 @@ public class ApplicationContext {
     DataSource dataSource() {
     	DriverManagerDataSource dataSource = new DriverManagerDataSource();
     	dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/pgu?serverTimezone=UTC-4");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/pgu");
         dataSource.setUsername("root");
         dataSource.setPassword("password");
         return dataSource;
